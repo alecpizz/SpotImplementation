@@ -5,15 +5,14 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/ThreadMetalPlate.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Roughcast.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/solids/protos/SolidBox.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/sick/protos/SickS300.proto"
 EXTERNPROTO "../protos/Spot.proto"
 
 WorldInfo {
   title "Spot_Maze"
 }
 Viewpoint {
-  orientation -0.19235386763411647 -0.18936195434836897 0.9628821526290551 4.567445374771509
-  position 7.356121184103538 6.964732482510161 3.347502531458938
+  orientation -0.20359012504043772 -0.231511903599045 0.9512903339559198 4.704755481882086
+  position 7.85119156914364 1.1179651763421017 1.1967826996146753
 }
 TexturedBackground {
   texture "factory"
@@ -152,14 +151,110 @@ SolidBox {
 DEF Spot Spot {
   translation 8.39 0.11 0.6
   rotation 0 0 1 -3.14159
-  controller "spot_controller"
   window "spot_controller"
   supervisor TRUE
+  frontExtension [
+    Transform {
+      translation 0 0.12 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            roughness 1
+          }
+          geometry Box {
+            size 0.1 0.1 0.1
+          }
+        }
+      ]
+    }
+  ]
   middleExtension [
-    SickS300 {
+    Lidar {
       translation 0 0.11 0.09
       rotation 0.577349935856137 0.577349935856137 0.5773509358560258 -2.09439
+      children [
+        Pose {
+          rotation 0 0 1 3.14159
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0 0 0
+                roughness 0.5
+                metalness 0.2
+              }
+              geometry Mesh {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/sick/protos/meshes/sick_s300_black.dae"
+                ]
+              }
+            }
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0 0 0
+              }
+              geometry Mesh {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/sick/protos/meshes/sick_s300_glass.dae"
+                ]
+              }
+            }
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.969 0.8 0.016
+                roughness 0.5
+                metalness 0.2
+              }
+              geometry Mesh {
+                url [
+                  "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/sick/protos/meshes/sick_s300_yellow.dae"
+                ]
+              }
+            }
+          ]
+        }
+      ]
       name "SickS300"
+      boundingObject Group {
+        children [
+          Pose {
+            translation -0.0315 0 -0.0712
+            rotation -0.5773516025189619 0.5773476025217157 0.5773516025189619 -2.094405
+            children [
+              Shape {
+                geometry Box {
+                  size 0.0995 0.0874 0.0443
+                }
+              }
+            ]
+          }
+          Pose {
+            translation 0 0 -0.0671
+            children [
+              Shape {
+                geometry Cylinder {
+                  height 0.0956
+                  radius 0.0498
+                }
+              }
+            ]
+          }
+          Cylinder {
+            height 0.068
+            radius 0.047
+            subdivision 16
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1.2
+      }
+      horizontalResolution 540
+      fieldOfView 4.71238898038
+      verticalFieldOfView 0.008726646259962964
+      numberOfLayers 1
+      maxRange 5
+      type "rotating"
     }
   ]
 }
