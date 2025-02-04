@@ -1,4 +1,4 @@
-#VRML_SIM R2023b utf8
+#VRML_SIM R2025a utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
@@ -11,8 +11,8 @@ WorldInfo {
   title "Spot_Maze"
 }
 Viewpoint {
-  orientation -0.20359012504043772 -0.231511903599045 0.9512903339559198 4.704755481882086
-  position 7.85119156914364 1.1179651763421017 1.1967826996146753
+  orientation -0.1358882286626678 -0.299760014908247 0.9442872035419786 5.267861195423763
+  position 4.180175888360717 6.4106800609317185 3.5123654335611736
 }
 TexturedBackground {
   texture "factory"
@@ -33,14 +33,86 @@ RectangleArena {
     }
   }
 }
-SolidBox {
+Solid {
   translation 3.63 0.21 0.85
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 0.5
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -0.015 2 0.85
+            0.015 2 0.85
+            0.015 2 -0.85
+            -0.015 2 -0.85
+            -0.015 -2 -0.85
+            0.015 -2 -0.85
+            0.015 -2 0.85
+            -0.015 -2 0.85
+            -0.015 -2 0.85
+            0.015 -2 0.85
+            0.015 2 0.85
+            -0.015 2 0.85
+            0.015 -2 -0.85
+            -0.015 -2 -0.85
+            -0.015 2 -0.85
+            0.015 2 -0.85
+            -0.015 -2 -0.85
+            -0.015 -2 0.85
+            -0.015 2 0.85
+            -0.015 2 -0.85
+            0.015 -2 0.85
+            0.015 -2 -0.85
+            0.015 2 -0.85
+            0.015 2 0.85
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0.0075 0.425
+            0 0.425
+            0 0
+            0.0075 0
+            0 0
+            0.0075 0
+            0.0075 0.425
+            0 0.425
+            0 0.0075
+            0 0
+            1 0
+            1 0.0075
+            0 0.0075
+            0 0
+            1 0
+            1 0.0075
+            1 0
+            1 0.425
+            0 0.425
+            0 0
+            0 0.425
+            0 0
+            1 0
+            1 0.425
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1, 4, 5, 6, 7, -1, 8, 9, 10, 11, -1, 12, 13, 14, 15, -1, 16, 17, 18, 19, -1, 20, 21, 22, 23, -1
+        ]
+        creaseAngle 1.5
+      }
+    }
+  ]
   name "arena_wall_1"
-  size 0.03 4 1.7
-  appearance PBRAppearance {
-    roughness 0.5
-    metalness 0
+  model "box"
+  boundingObject Box {
+    size 0.03 4 1.7
   }
+  recognitionColors [
+    0 1 0
+  ]
 }
 SolidBox {
   translation 0.92 -3.49 0.85
@@ -154,7 +226,20 @@ DEF Spot Spot {
   window "spot_controller"
   supervisor TRUE
   frontExtension [
-    Transform {
+    Pose {
+      translation 6.634e-07 -0.11 -0.25
+      rotation 0 1 0 1.5708
+      children [
+        Camera {
+          name "main camera"
+          width 256
+          height 256
+          recognition Recognition {
+          }
+        }
+      ]
+    }
+    Pose {
       translation 0 0.12 0
       children [
         Shape {

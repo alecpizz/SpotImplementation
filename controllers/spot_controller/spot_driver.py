@@ -58,6 +58,9 @@ class SpotDriver:
             self.motors.append(self.robot.getDevice(motor_name))
         
 
+        self.camera = self.robot.getDevice("main camera")
+        self.camera.enable(self.timestep)
+        self.camera.recognitionEnable(self.timestep)
         ## Positional Sensors
         self.motor_sensor_names = [name.replace('motor', 'sensor') for name in self.motor_names]
         self.motor_sensors = []
@@ -498,3 +501,6 @@ class SpotDriver:
 
     def step(self, timestep):
        return self.robot.step(timestep)
+
+    def get_camera(self):
+        return self.camera

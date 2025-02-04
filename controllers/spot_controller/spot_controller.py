@@ -53,7 +53,6 @@ def wall_direction( lidar_data, num_sectors=8):
         print("sector", i, ":", "data size:", len(sectors[i]), "avg:", np.mean(sectors[i]))
     #split the data into 8 sectors, store em somewhere
 
-
 while spot.step(spot.get_timestep()) != -1:
     print(AnsiCodes.CLEAR_SCREEN + "\n")
     lidar = np.array(spot.get_lidar_image())
