@@ -1,21 +1,21 @@
-Webots Project File version R2025a
-perspectives: 000000ff00000000fd0000000300000000000001ca0000039ffc0200000001fb00000012005300630065006e0065005400720065006501000000000000039f000000000000000000000001000003fc000002cffc0200000001fb0000001400540065007800740045006400690074006f00720100000015000002cf0000008500ffffff0000000300000a000000011efc0100000002fb0000000e0043006f006e0073006f006c006501000001d0000005b00000000000000000fb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c010000000000000a000000006900ffffff00000602000002cf00000004000000040000000100000008fc00000000
+Webots Project File version R2023b
+perspectives: 000000ff00000000fd0000000300000000000001ca0000039ffc0200000001fb00000012005300630065006e0065005400720065006501000000000000039f0000000000000000000000010000017f00000393fc0200000001fb0000001400540065007800740045006400690074006f00720100000016000003930000008700ffffff000000030000078000000039fc0100000002fb0000000e0043006f006e0073006f006c006501000001d0000005b00000000000000000fb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c0100000000000007800000006900ffffff000005ff0000039300000004000000040000000100000008fc00000000
 simulationViewPerspectives: 000000ff0000000100000002000001e10000055e0100000002010000000101
 sceneTreePerspectives: 000000ff00000001000000030000001e000000c0000000fa0100000002010000000201
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 3 "controllers/spot_controller/spot_controller.py" "controllers/spot_controller/spot_driver.py" "protos/Spot.proto" ""
+textFiles: 0 "spot_driver.py" "protos/Spot.proto"
 globalOptionalRendering: LidarRaysPaths::LidarPointClouds
 consoles: Console:All:All
-renderingDevicePerspectives: Spot:left flank camera;0;0.549098;0.0056872;0.080207
-renderingDevicePerspectives: Spot:left flank depth;1;0.136792;0.0843602;0.0819423
-renderingDevicePerspectives: Spot:left head camera;1;0.0537037;0.0691943;0.0151745
-renderingDevicePerspectives: Spot:left head depth;0;0.136792;0.114692;0.0349014;1251;504;120;32;0
-renderingDevicePerspectives: Spot:main camera;1;4.40625;0;0.569044
-renderingDevicePerspectives: Spot:rear camera;1;0.0537037;0.0900474;0.0986343
-renderingDevicePerspectives: Spot:rear depth;1;0.136792;0.178199;0.0667678
-renderingDevicePerspectives: Spot:right flank camera;1;0.0537037;0.0909953;0.0212443
-renderingDevicePerspectives: Spot:right flank depth;1;0.136792;0.126066;0.0440061
-renderingDevicePerspectives: Spot:right head camera;1;0.0537037;0.0947867;0.0500759
-renderingDevicePerspectives: Spot:right head depth;0;0.136792;0.105213;0.0257967;1251;504;120;32;0
+renderingDevicePerspectives: Spot:left flank camera;1;0.0537037;0;0
+renderingDevicePerspectives: Spot:left flank depth;1;0.136792;0;0
+renderingDevicePerspectives: Spot:left head camera;1;0.0537037;0;0
+renderingDevicePerspectives: Spot:left head depth;1;0.136792;0;0
+renderingDevicePerspectives: Spot:main camera;1;1;0;0
+renderingDevicePerspectives: Spot:rear camera;1;0.0537037;0;0
+renderingDevicePerspectives: Spot:rear depth;1;0.136792;0;0
+renderingDevicePerspectives: Spot:right flank camera;1;0.0537037;0;0
+renderingDevicePerspectives: Spot:right flank depth;1;0.136792;0;0
+renderingDevicePerspectives: Spot:right head camera;1;0.0537037;0;0
+renderingDevicePerspectives: Spot:right head depth;1;0.136792;0;0
