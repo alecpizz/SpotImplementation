@@ -1,5 +1,6 @@
 """spot_controller controller."""
 from controller import AnsiCodes
+from controller import CameraRecognitionObject
 from spot_driver import SpotDriver
 import numpy as np
 from enum import Enum
@@ -78,7 +79,7 @@ def right_wall_present():
     current_right = np.mean(extracted_data)
     right_average = current_right
     print("Right Wall diff at sector:", RIGHT_WALL_INDEX, current_right)
-    right_wall = current_right < WALL_MAX_THRESHOLD
+    right_wall = current_right < 1.5
 
 
 def front_wall_present():
@@ -121,14 +122,22 @@ while spot.step(spot.get_timestep()) != -1:
     wall_direction(lidar)
     check_walls()
     if not right_wall:  # No wall on the right
-        spot.turnright(100)
+        spot.turnright(50)
         print("no right wall")
     elif not front_wall:  # No wall ahead
         spot.forward(10)
         print("no front wall")
     elif not left_wall:  # No wall on the left
-        spot.turnleft(100)
+        spot.turnleft(50)
         print("no left wall")
     else:  # Wall on all sides (dead end or very tight turn)
-        spot.turnleft(100)
+        spot.turnleft(50)
         print("wall on all sides")
+
+    objects = spot.get_camera().getRecognitionObjects()
+    if len(objects) > 0:
+        colors = objects[0].getColors()
+        if objects[0].getNumberOfColors() > 0:
+            print("COLOR", colors[0], colors[1], colors[2])
+            if colors[0] == 1.0 and front_wall:
+                break
