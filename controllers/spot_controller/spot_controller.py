@@ -120,15 +120,15 @@ while spot.step(spot.get_timestep()) != -1:
     lidar = lidar[np.isfinite(lidar)]
     wall_direction(lidar)
     check_walls()
-    # if not right_wall:  # No wall on the right
-    #     spot.turnright(100)
-    #     print("no right wall")
-    # elif not front_wall:  # No wall ahead
-    #     spot.forward(10)
-    #     print("no front wall")
-    # elif not left_wall:  # No wall on the left
-    #     spot.turnleft(100)
-    #     print("no left wall")
-    # else:  # Wall on all sides (dead end or very tight turn)
-    #     spot.turnleft(100)
-    #     print("wall on all sides")
+    if not right_wall:  # No wall on the right
+        spot.turnright(100)
+        print("no right wall")
+    elif not front_wall:  # No wall ahead
+        spot.forward(10)
+        print("no front wall")
+    elif not left_wall:  # No wall on the left
+        spot.turnleft(100)
+        print("no left wall")
+    else:  # Wall on all sides (dead end or very tight turn)
+        spot.turnleft(100)
+        print("wall on all sides")

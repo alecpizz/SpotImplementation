@@ -1,0 +1,35 @@
+#VRML_SIM R2023a utf8
+PROTO mazeColumn [
+    field SFVec3f    translation  0 0 0
+    field SFRotation rotation     0 0 1 0
+    field SFVec3f    scale 0.01 0.01 0.01
+    field SFString   name "column"
+]
+{
+    Solid {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    children [
+    Transform {
+      scale IS scale
+        children [
+            Shape {
+            appearance PBRAppearance {
+            roughness 1
+            metalness 0
+          }
+             geometry Mesh {
+                url [
+              "mazestick.obj"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject Box {
+    size 0.3038532764538232 0.2587887215782581 2.2152451582435395
+  }
+}
+}
