@@ -155,6 +155,13 @@ while spot.step(spot.get_timestep()) != -1:
     else:
         spot.move_forward(forward_speed)
 
+    objects = spot.get_camera().getRecognitionObjects()
+    if len(objects) > 0:
+        colors = objects[0].getColors()
+        if objects[0].getNumberOfColors() > 0:
+            print("COLOR", colors[0], colors[1], colors[2])
+            if colors[0] >= 0.95 and front_wall:
+                break
 
 
 
