@@ -1,4 +1,7 @@
 """spot_controller controller."""
+import time
+from time import sleep
+
 from controller import AnsiCodes
 from controller import CameraRecognitionObject
 from spot_driver import SpotDriver
@@ -104,40 +107,74 @@ def front_wall_present():
     print("Front Wall diff at sector:", FRONT_WALL_INDEX, current_front)
     front_wall = current_front < WALL_MAX_THRESHOLD
 
-# lidar distances are scanned in left to right, aka clockwise. if the index of the value is before
-# our front marker, it is to the left. if it's more, it's to the right. where does it start?
+#50 0.01 5 works kinda
+DESIRED_WALL_DISTANCE = 1
+KP = 40
+KI = 0.01
+KD = 5
+integral_error = 0.0
+prev_error = 0.0
+last_time = time.time()
 
-def wall_direction(lidar_data, num_sectors=8):
-    global sectors
-    sectors = np.array_split(lidar_data, num_sectors)
-    for i in range(num_sectors):
-        print("sector", i, ":", "data size:", len(sectors[i]), "avg:", np.mean(sectors[i]))
-    # split the data into 8 sectors, store em somewhere
+def calc_pid(current_distance):
+    global integral_error, prev_error, last_time
+    error = DESIRED_WALL_DISTANCE - current_distance
+    print("Error: ", error, current_distance)
+    current_time = time.time()
+    delta_time = current_time - last_time
 
+    spring = KP * error
+
+    integral_error += error * delta_time
+    integral = KI * integral_error
+
+    damper = (error - prev_error) / delta_time if delta_time > 0 else 0.0
+    damper = KD * damper
+
+    prev_error = error
+    last_time = current_time
+
+    return spring + integral + damper
 
 while spot.step(spot.get_timestep()) != -1:
     print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
     lidar = np.array(spot.get_lidar_image())
     lidar = lidar[np.isfinite(lidar)]
-    wall_direction(lidar)
     check_walls()
-    if not right_wall:  # No wall on the right
-        spot.turnright(50)
-        print("no right wall")
-    elif not front_wall:  # No wall ahead
-        spot.forward(10)
-        print("no front wall")
-    elif not left_wall:  # No wall on the left
-        spot.turnleft(50)
-        print("no left wall")
-    else:  # Wall on all sides (dead end or very tight turn)
-        spot.turnleft(50)
-        print("wall on all sides")
 
-    objects = spot.get_camera().getRecognitionObjects()
-    if len(objects) > 0:
-        colors = objects[0].getColors()
-        if objects[0].getNumberOfColors() > 0:
-            print("COLOR", colors[0], colors[1], colors[2])
-            if colors[0] == 1.0 and front_wall:
-                break
+    right_distance = right_average
+    pid_output = calc_pid(right_distance)
+
+    forward_speed = 50
+    turn_speed_multi = 3
+    turn_step = pid_output * turn_speed_multi
+    if turn_step > 0:
+        spot.turnleft(abs(turn_step))
+    elif turn_step < 0:
+        spot.turnright(abs(turn_step))
+    else:
+        spot.move_forward(forward_speed)
+
+
+
+
+    # if not right_wall:  # No wall on the right
+    #     spot.turnright(50)
+    #     print("no right wall")
+    # elif not front_wall:  # No wall ahead
+    #     spot.forward(10)
+    #     print("no front wall")
+    # elif not left_wall:  # No wall on the left
+    #     spot.turnleft(50)
+    #     print("no left wall")
+    # else:  # Wall on all sides (dead end or very tight turn)
+    #     spot.turnleft(50)
+    #     print("wall on all sides")
+    #
+    # objects = spot.get_camera().getRecognitionObjects()
+    # if len(objects) > 0:
+    #     colors = objects[0].getColors()
+    #     if objects[0].getNumberOfColors() > 0:
+    #         print("COLOR", colors[0], colors[1], colors[2])
+    #         if colors[0] == 1.0 and front_wall:
+    #             break
