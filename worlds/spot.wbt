@@ -4,9 +4,9 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/ThreadMetalPlate.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Roughcast.proto"
-EXTERNPROTO "E:/CProjects/SpotImplementation/worlds/SolidBox.proto"
+EXTERNPROTO "SolidBox.proto"
 EXTERNPROTO "../protos/Spot.proto"
-EXTERNPROTO "E:/CProjects/SpotImplementation/worlds/mazeColumn.proto"
+EXTERNPROTO "mazeColumn.proto"
 
 WorldInfo {
   title "Spot_Maze"
