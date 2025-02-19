@@ -109,7 +109,7 @@ def front_wall_present():
 
 #50 0.01 5 works kinda
 DESIRED_WALL_DISTANCE = 1
-KP = 40
+KP = 45
 KI = 0.01
 KD = 5
 integral_error = 0.0
