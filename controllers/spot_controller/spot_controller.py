@@ -109,9 +109,9 @@ def front_wall_present():
 
 #50 0.01 5 works kinda
 DESIRED_WALL_DISTANCE = 1
-KP = 45
-KI = 0.01
-KD = 5
+KP = 60
+KI = 0.05
+KD = 10
 integral_error = 0.0
 prev_error = 0.0
 last_time = time.time()
@@ -146,14 +146,18 @@ while spot.step(spot.get_timestep()) != -1:
     pid_output = calc_pid(right_distance)
 
     forward_speed = 50
-    turn_speed_multi = 3
-    turn_step = pid_output * turn_speed_multi
+    print("PID", pid_output)
+    #TODO: check PID for Left, Forward
+    # for a forward, we should probably try to ensure 0 distance in front. or some other threshold
+    # that way if we see some distance, we know its turning time and can influence the other PIDs more.
+    turn_step = pid_output
     if turn_step > 0:
         spot.turnleft(abs(turn_step))
     elif turn_step < 0:
         spot.turnright(abs(turn_step))
     else:
-        spot.move_forward(forward_speed)
+        print("Forward")
+        spot.forward(forward_speed)
 
     objects = spot.get_camera().getRecognitionObjects()
     if len(objects) > 0:

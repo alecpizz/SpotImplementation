@@ -6,15 +6,16 @@ maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: -1
+globalOptionalRendering: LidarRaysPaths
 consoles: Console:All:All
-renderingDevicePerspectives: Spot:left flank camera;0;0.907407;0;0
+renderingDevicePerspectives: Spot:left flank camera;0;0.597222;0;0
 renderingDevicePerspectives: Spot:left flank depth;1;1;0;0
-renderingDevicePerspectives: Spot:left head camera;0;0.907407;0;0
+renderingDevicePerspectives: Spot:left head camera;0;0.597222;0;0
 renderingDevicePerspectives: Spot:left head depth;1;1;0;0
 renderingDevicePerspectives: Spot:main camera;1;1;0;0
 renderingDevicePerspectives: Spot:rear camera;0;0.519444;0.000726744;0
 renderingDevicePerspectives: Spot:rear depth;0;1;0;0
-renderingDevicePerspectives: Spot:right flank camera;0;0.907407;0;0
+renderingDevicePerspectives: Spot:right flank camera;0;0.597222;0;0
 renderingDevicePerspectives: Spot:right flank depth;1;1;0;0
-renderingDevicePerspectives: Spot:right head camera;0;0.907407;0;0
+renderingDevicePerspectives: Spot:right head camera;0;0.597222;0;0
 renderingDevicePerspectives: Spot:right head depth;1;1;0;0
