@@ -115,6 +115,7 @@ KD = 10
 integral_error = 0.0
 prev_error = 0.0
 last_time = time.time()
+nodes = set()
 
 def calc_pid(current_distance):
     global integral_error, prev_error, last_time
@@ -136,8 +137,10 @@ def calc_pid(current_distance):
 
     return spring + integral + damper
 
+
+
 while spot.step(spot.get_timestep()) != -1:
-    print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
+    # print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
     lidar = np.array(spot.get_lidar_image())
     lidar = lidar[np.isfinite(lidar)]
     check_walls()
@@ -155,37 +158,21 @@ while spot.step(spot.get_timestep()) != -1:
         spot.turnleft(abs(turn_step))
     elif turn_step < 0:
         spot.turnright(abs(turn_step))
+    elif front_wall:
+        spot.turnleft(forward_speed)
     else:
-        print("Forward")
         spot.forward(forward_speed)
+
 
     objects = spot.get_camera().getRecognitionObjects()
     if len(objects) > 0:
-        colors = objects[0].getColors()
-        if objects[0].getNumberOfColors() > 0:
-            print("COLOR", colors[0], colors[1], colors[2])
-            if colors[0] >= 0.95 and front_wall:
-                break
+        for obj in objects:
+            colors = obj.getColors()
+            nodes.add(tuple([colors[0], colors[1], colors[2]]))
+        # colors = objects[0].getColors()
+        # if objects[0].getNumberOfColors() > 0:
+        #     print("COLOR", colors[0], colors[1], colors[2])
+        #     if colors[0] >= 0.95 and front_wall:
+        #         break
 
-
-
-    # if not right_wall:  # No wall on the right
-    #     spot.turnright(50)
-    #     print("no right wall")
-    # elif not front_wall:  # No wall ahead
-    #     spot.forward(10)
-    #     print("no front wall")
-    # elif not left_wall:  # No wall on the left
-    #     spot.turnleft(50)
-    #     print("no left wall")
-    # else:  # Wall on all sides (dead end or very tight turn)
-    #     spot.turnleft(50)
-    #     print("wall on all sides")
-    #
-    # objects = spot.get_camera().getRecognitionObjects()
-    # if len(objects) > 0:
-    #     colors = objects[0].getColors()
-    #     if objects[0].getNumberOfColors() > 0:
-    #         print("COLOR", colors[0], colors[1], colors[2])
-    #         if colors[0] == 1.0 and front_wall:
-    #             break
+    print("Colors: ", nodes)
