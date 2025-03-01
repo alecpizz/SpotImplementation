@@ -3,7 +3,7 @@ PROTO mazeColumn [
     field SFVec3f    translation  0 0 0
     field SFRotation rotation     0 0 1 0
     field SFVec3f    scale 0.01 0.01 0.01
-    field SFString   name "column"
+	field SFString   name "column"
 ]
 {
     Solid {
@@ -21,7 +21,7 @@ PROTO mazeColumn [
           }
              geometry Mesh {
                 url [
-              "mazestick.obj"
+              "meshes/mazestick.obj"
             ]
           }
         }

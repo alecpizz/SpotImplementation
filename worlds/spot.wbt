@@ -4,16 +4,17 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/ThreadMetalPlate.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Roughcast.proto"
-EXTERNPROTO "SolidBox.proto"
+EXTERNPROTO "../protos/SolidBox.proto"
 EXTERNPROTO "../protos/Spot.proto"
-EXTERNPROTO "mazeColumn.proto"
+EXTERNPROTO "../protos/mazeColumn.proto"
+EXTERNPROTO "../protos/MazeGen.proto"
 
 WorldInfo {
   title "Spot_Maze"
 }
 Viewpoint {
-  orientation -0.4558527211405563 -0.10294190435167296 0.8840821573571098 3.5140265070539107
-  position 14.048329843688498 8.954098664360103 23.110583686821887
+  orientation -0.3743553492549019 -0.2349801748312879 0.8970186118027305 4.140951265839972
+  position 17.923698057925304 25.314610825168078 23.409423048378176
 }
 TexturedBackground {
   texture "factory"
@@ -1040,4 +1041,7 @@ SolidBox {
   recognitionColors [
     1 0 0
   ]
+}
+MazeGen {
+  mazeWidth 8
 }
