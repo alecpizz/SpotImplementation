@@ -8,7 +8,7 @@ PROTO MazeGen [
   field SFString mazeString "1111111100000001111111011111110111111101111111011111110111111101"
   field SFInt32 mazeWidth 8
   field SFFloat cellSize 1
-  field SFRotation rotation 0 0 1 0
+  field SFRotation rotation 0 1 0 3.14
 ]
 {
   %<
@@ -50,7 +50,7 @@ PROTO MazeGen [
             {
                console.log("above");
 
-               let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y - cellSize,z: 0.85};
+               let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y - cellSize,z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 1.5708};
                walls.push({coordinates: coords2, rotation: rot});
             }
@@ -58,7 +58,7 @@ PROTO MazeGen [
             if(belowIndex !== null && mazeString[belowIndex] === '0')
             {
               console.log("below");
-              let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y ,z: 0.85};
+              let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y ,z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 1.5708};
                walls.push({coordinates: coords2, rotation: rot});
             }
@@ -66,7 +66,7 @@ PROTO MazeGen [
             if(leftIndex !== null && mazeString[leftIndex] === '0')
             {
               console.log("left");
-               let coords2 = {x: coords.x , y: coords.y + (0.5 * -cellSize), z: 0.85};
+               let coords2 = {x: coords.x , y: coords.y + (0.5 * -cellSize), z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 0};
                walls.push({coordinates: coords2, rotation: rot});
             }
@@ -74,7 +74,7 @@ PROTO MazeGen [
             if(rightIndex !== null && mazeString[rightIndex] === '0')
             {
               console.log("right");
-               let coords2 = {x: coords.x + cellSize, y: coords.y + (0.5 * -cellSize),z: 0.85};
+               let coords2 = {x: coords.x + cellSize, y: coords.y + (0.5 * -cellSize),z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 0};
                walls.push({coordinates: coords2, rotation: rot});
             }
@@ -90,6 +90,7 @@ PROTO MazeGen [
       %< for (let i = 0; i < columns.length; i++) { >%
         Solid {
           translation %<= columns[i].coordinates.x >% %<= columns[i].coordinates.y >% %<= columns[i].coordinates.z >%
+          rotation 0 1 0 3.14
           children [
             Transform {
               scale 0.01 0.01 0.01
