@@ -2,6 +2,7 @@
 import time
 from time import sleep
 
+from PID import PID
 from controller import AnsiCodes
 from controller import CameraRecognitionObject
 from spot_driver import SpotDriver
@@ -112,41 +113,21 @@ DESIRED_WALL_DISTANCE = 1
 KP = 60
 KI = 0.05
 KD = 10
-integral_error = 0.0
-prev_error = 0.0
+
 last_time = time.time()
 nodes = set()
 
-def calc_pid(current_distance):
-    global integral_error, prev_error, last_time
-    error = DESIRED_WALL_DISTANCE - current_distance
-    print("Error: ", error, current_distance)
-    current_time = time.time()
-    delta_time = current_time - last_time
-
-    spring = KP * error
-
-    integral_error += error * delta_time
-    integral = KI * integral_error
-
-    damper = (error - prev_error) / delta_time if delta_time > 0 else 0.0
-    damper = KD * damper
-
-    prev_error = error
-    last_time = current_time
-
-    return spring + integral + damper
-
+right_PID = PID(KP, KI, KD)
 
 
 while spot.step(spot.get_timestep()) != -1:
-    # print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
+    print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
     lidar = np.array(spot.get_lidar_image())
     lidar = lidar[np.isfinite(lidar)]
     check_walls()
 
     right_distance = right_average
-    pid_output = calc_pid(right_distance)
+    pid_output = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
 
     forward_speed = 50
     print("PID", pid_output)

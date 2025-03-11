@@ -52,7 +52,7 @@ PROTO MazeGen [
 
                let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y - cellSize,z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 1.5708};
-               walls.push({coordinates: coords2, rotation: rot, name: 'wall' + x.toString()});
+               walls.push({coordinates: coords2, rotation: rot, color: (x / 255.0)});
                console.log(`wall ${x}`);
             }
 
@@ -61,7 +61,7 @@ PROTO MazeGen [
               console.log("below");
               let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y ,z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 1.5708};
-               walls.push({coordinates: coords2, rotation: rot, name: 'wall' + x.toString()});
+               walls.push({coordinates: coords2, rotation: rot, color: (x / 255.0)});
             }
 
             if(leftIndex !== null && mazeString[leftIndex] === '0')
@@ -69,7 +69,7 @@ PROTO MazeGen [
               console.log("left");
                let coords2 = {x: coords.x , y: coords.y + (0.5 * -cellSize), z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 0};
-               walls.push({coordinates: coords2, rotation: rot, name: 'wall' + y.toString()});
+               walls.push({coordinates: coords2, rotation: rot, color: (y / 255.0)});
             }
 
             if(rightIndex !== null && mazeString[rightIndex] === '0')
@@ -77,7 +77,7 @@ PROTO MazeGen [
               console.log("right");
                let coords2 = {x: coords.x + cellSize, y: coords.y + (0.5 * -cellSize),z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 0};
-               walls.push({coordinates: coords2, rotation: rot, name: 'wall' + y.toString()});
+               walls.push({coordinates: coords2, rotation: rot, color: (y / 255.0)});
             }
         }
       
@@ -140,7 +140,7 @@ PROTO MazeGen [
             metalness 0
           }
           recognitionColors [
-            %<= i / 255.0>% 0 0
+            %<= walls[i].color >% 0 0
           ]
         }
       %< } >%
