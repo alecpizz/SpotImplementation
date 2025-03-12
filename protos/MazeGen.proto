@@ -12,10 +12,7 @@ PROTO MazeGen [
 ]
 {
   %<
-    console.log("hello world!");
-    console.log(fields.mazeString.value);
     const mazeString = fields.mazeString.value.replace(/\s+/g, '');
-    console.log(mazeString);
     const mazeWidth = fields.mazeWidth.value;
     const cellSize = fields.cellSize.value;
     let columns = []
@@ -48,17 +45,13 @@ PROTO MazeGen [
         {
             if(aboveIndex !== null && mazeString[aboveIndex] === '0')
             {
-               console.log("above");
-
                let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y - cellSize,z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 1.5708};
                walls.push({coordinates: coords2, rotation: rot, color: (x / 255.0)});
-               console.log(`wall ${x}`);
             }
 
             if(belowIndex !== null && mazeString[belowIndex] === '0')
             {
-              console.log("below");
               let coords2 = {x: coords.x + (0.5 * cellSize), y: coords.y ,z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 1.5708};
                walls.push({coordinates: coords2, rotation: rot, color: (x / 255.0)});
@@ -66,7 +59,6 @@ PROTO MazeGen [
 
             if(leftIndex !== null && mazeString[leftIndex] === '0')
             {
-              console.log("left");
                let coords2 = {x: coords.x , y: coords.y + (0.5 * -cellSize), z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 0};
                walls.push({coordinates: coords2, rotation: rot, color: (y / 255.0)});
@@ -74,7 +66,6 @@ PROTO MazeGen [
 
             if(rightIndex !== null && mazeString[rightIndex] === '0')
             {
-              console.log("right");
                let coords2 = {x: coords.x + cellSize, y: coords.y + (0.5 * -cellSize),z: -0.85};
                let rot = {x: 0, y: 0, z: 0, a: 0};
                walls.push({coordinates: coords2, rotation: rot, color: (y / 255.0)});
@@ -90,6 +81,7 @@ PROTO MazeGen [
     children [
       %< for (let i = 0; i < columns.length; i++) { >%
         Solid {
+          name "column %<= i >%"
           translation %<= columns[i].coordinates.x >% %<= columns[i].coordinates.y >% %<= columns[i].coordinates.z >%
           rotation 0 1 0 3.14
           children [
@@ -116,6 +108,7 @@ PROTO MazeGen [
 
       %< for (let i = 0; i < walls.length; i++) { >%
         SolidBox {
+          name "Wall %<= i >%"
           translation %<= walls[i].coordinates.x >% %<= walls[i].coordinates.y >% %<= walls[i].coordinates.z >%
           rotation %<= walls[i].rotation.x >% %<= walls[i].rotation.y >% %<= walls[i].rotation.z >% %<= walls[i].rotation.a >%
           size 0.02 2 2
@@ -132,6 +125,7 @@ PROTO MazeGen [
         }
 
         SolidBox {
+          name "Node %<= walls[i].color >% %<= i >%"
           translation %<= walls[i].coordinates.x >% %<= walls[i].coordinates.y >% %<= walls[i].coordinates.z >%
           size 0.2 0.2 0.2
           appearance PBRAppearance {
