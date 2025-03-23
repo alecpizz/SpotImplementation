@@ -8,6 +8,7 @@ from controller import CameraRecognitionObject
 from spot_driver import SpotDriver
 import numpy as np
 from enum import Enum
+from astarsolver import AstarSolver
 
 spot = SpotDriver()
 
@@ -108,7 +109,8 @@ def front_wall_present():
     print("Front Wall diff at sector:", FRONT_WALL_INDEX, current_front)
     front_wall = current_front < WALL_MAX_THRESHOLD
 
-#50 0.01 5 works kinda
+
+# 50 0.01 5 works kinda
 DESIRED_WALL_DISTANCE = 1
 KP = 60
 KI = 0.05
@@ -118,42 +120,61 @@ last_time = time.time()
 nodes = set()
 
 right_PID = PID(KP, KI, KD)
+maze = [
+    "11111111",
+    "00001001",
+    "11101101",
+    "11100001",
+    "11101101",
+    "11101101",
+    "11101101",
+    "11111101"
+]
+astar = AstarSolver((1, 0), (7, 6), maze)
+commands = astar.solve_maze()
+for command in commands:
+    print(command)
+    if command == "left":
+        spot.turn_left(4.8)
+    elif command == "right":
+        spot.turn_right(4.8)
+    elif command == "forward":
+        spot.move_forward(4.35)
+    spot.stop_moving(0.2)
 
-
-while spot.step(spot.get_timestep()) != -1:
-    print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
-    lidar = np.array(spot.get_lidar_image())
-    lidar = lidar[np.isfinite(lidar)]
-    check_walls()
-
-    right_distance = right_average
-    pid_output = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
-
-    forward_speed = 50
-    print("PID", pid_output)
-    #TODO: check PID for Left, Forward
-    # for a forward, we should probably try to ensure 0 distance in front. or some other threshold
-    # that way if we see some distance, we know its turning time and can influence the other PIDs more.
-    turn_step = pid_output
-    if turn_step > 0:
-        spot.turnleft(abs(turn_step))
-    elif turn_step < 0:
-        spot.turnright(abs(turn_step))
-    elif front_wall:
-        spot.turnleft(forward_speed)
-    else:
-        spot.forward(forward_speed)
-
-
-    objects = spot.get_camera().getRecognitionObjects()
-    if len(objects) > 0:
-        for obj in objects:
-            colors = obj.getColors()
-            nodes.add(tuple([colors[0], colors[1], colors[2]]))
-        # colors = objects[0].getColors()
-        # if objects[0].getNumberOfColors() > 0:
-        #     print("COLOR", colors[0], colors[1], colors[2])
-        #     if colors[0] >= 0.95 and front_wall:
-        #         break
-
-    print("Colors: ", nodes)
+# while spot.step(spot.get_timestep()) != -1:
+#     print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
+#     lidar = np.array(spot.get_lidar_image())
+#     lidar = lidar[np.isfinite(lidar)]
+#     check_walls()
+#
+#     right_distance = right_average
+#     pid_output = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
+#
+#     forward_speed = 50
+#     print("PID", pid_output)
+#     # TODO: check PID for Left, Forward
+#     # for a forward, we should probably try to ensure 0 distance in front. or some other threshold
+#     # that way if we see some distance, we know its turning time and can influence the other PIDs more.
+#     turn_step = pid_output
+#     if turn_step > 0:
+#         spot.turnleft(abs(turn_step))
+#     elif turn_step < 0:
+#         spot.turnright(abs(turn_step))
+#     elif front_wall:
+#         spot.turnleft(forward_speed)
+#     else:
+#         spot.forward(forward_speed)
+#
+#     objects = spot.get_camera().getRecognitionObjects()
+#     if len(objects) > 0:
+#         for obj in objects:
+#             colors = obj.getColors()
+#             nodes.add(tuple([colors[0], colors[1], colors[2]]))
+#         # colors = objects[0].getColors()
+#         # if objects[0].getNumberOfColors() > 0:
+#         #     print("COLOR", colors[0], colors[1], colors[2])
+#         #     if colors[0] >= 0.95 and front_wall:
+#         #         break
+#
+#     print("Colors: ", nodes)
