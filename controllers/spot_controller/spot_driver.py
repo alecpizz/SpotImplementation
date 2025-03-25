@@ -6,7 +6,7 @@ import time
 from SpotKinematics import SpotModel
 from Bezier import BezierGait
 
-from controller import Supervisor #, Robot
+from controller import Supervisor, Node #, Robot
 
 NUMBER_OF_JOINTS = 12
 
@@ -504,3 +504,19 @@ class SpotDriver:
 
     def get_camera(self):
         return self.camera
+
+    def get_maze(self):
+        children = self.robot.getRoot().getField('children')
+        number = children.getCount()
+        for i in range(0, number):
+            node = children.getMFNode(i)
+            if node.getField('mazeString'):
+                return node.getField('mazeString').getSFString()
+
+    def get_maze_width(self):
+        children = self.robot.getRoot().getField('children')
+        number = children.getCount()
+        for i in range(0, number):
+            node = children.getMFNode(i)
+            if node.getField('mazeWidth'):
+                return node.getField('mazeWidth').getSFInt32()

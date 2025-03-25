@@ -120,18 +120,25 @@ last_time = time.time()
 nodes = set()
 
 right_PID = PID(KP, KI, KD)
-maze = [
-    "11111111",
-    "00001001",
-    "11101101",
-    "11100001",
-    "11101101",
-    "11101101",
-    "11101101",
-    "11111101"
-]
+def string_to_array(input, width):
+    string_length = len(input)
+    if string_length % width != 0:
+        return None
+    rows = string_length // width
+    result = []
+    for i in range(rows):
+        start = i * width
+        end = (i + 1) * width
+        row = list(input[start:end])
+        result.append(row)
+    return result
+
+mazeStr = spot.get_maze()
+mazeWidth = spot.get_maze_width()
+maze = string_to_array(mazeStr, mazeWidth)
 astar = AstarSolver((1, 0), (7, 6), maze)
 commands = astar.solve_maze()
+
 for command in commands:
     print(command)
     if command == "left":
