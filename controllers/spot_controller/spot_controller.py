@@ -139,29 +139,21 @@ maze = string_to_array(mazeStr, mazeWidth)
 astar = AstarSolver((1, 0), (7, 6), maze)
 commands = astar.solve_maze()
 
-
-for i in range(len(commands)):
+cmd_length = len(commands)
+for i in range(cmd_length):
     command = commands[i]
-    if command == "left":
-        spot.turn_left(4.8)
-    elif command == "right":
-        spot.turn_right(4.8)
-    elif command == "forward":
-        if i < (len(commands) - 1) and commands[i + 1] == "forward":
-            spot.move_forward(4.35)
-        else:
-            spot.move_forward(4.7)
-    spot.stop_moving(0.2)
-
-for command in commands:
     print(command)
     if command == "left":
         spot.turn_left(4.8)
     elif command == "right":
         spot.turn_right(4.8)
     elif command == "forward":
-        spot.move_forward(4.4)
+        if i < cmd_length - 1 and commands[i + 1] == "forward":
+            spot.move_forward(4.35)
+        else:
+            spot.move_forward(4.7)
     spot.stop_moving(0.2)
+
 
 # while spot.step(spot.get_timestep()) != -1:
 #     print(AnsiCodes.CLEAR_SCREEN + "\nDATA:")
