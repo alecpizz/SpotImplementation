@@ -113,12 +113,7 @@ PROTO MazeGen [
           rotation %<= walls[i].rotation.x >% %<= walls[i].rotation.y >% %<= walls[i].rotation.z >% %<= walls[i].rotation.a >%
           size 0.02 %<= fields.cellDim.value.x >% %<= fields.cellDim.value.y >%
           appearance PBRAppearance {
-            baseColor 0 0 0
-            baseColorMap ImageTexture {
-              url [
-                "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/default/worlds/textures/tagged_wall.jpg"
-              ]
-            }
+            baseColor 0.85 0.85 0.85
             roughness 0.5
             metalness 0
           }

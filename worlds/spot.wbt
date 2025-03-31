@@ -7,22 +7,25 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 EXTERNPROTO "../protos/SolidBox.proto"
 EXTERNPROTO "../protos/Spot.proto"
 EXTERNPROTO "../protos/MazeGen.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 
 WorldInfo {
   title "Spot_Maze"
 }
 Viewpoint {
-  orientation 0.6054240162076486 0.5955060579111368 -0.5280476262517794 2.1997901193909004
-  position 1.358938245072813 -1.7058036509567445 30.507857691637255
+  orientation -0.2749998285201517 -0.08067718534350678 0.9580533837312704 3.6537525911386015
+  position 28.116294192423094 18.329282966189258 20.585528195505628
 }
 TexturedBackground {
-  texture "factory"
-  skybox FALSE
+  texture "noon_sunny_empty"
+  skyColor [
+    0.3 0.7 1
+  ]
 }
 RectangleArena {
   translation 0.59 0 0
   rotation 0 1 0 0
-  floorSize 18 20
+  floorSize 15 14
   floorTileSize 1 1
   floorAppearance ThreadMetalPlate {
   }
@@ -35,7 +38,7 @@ RectangleArena {
   }
 }
 DEF Spot Spot {
-  translation 7.97 -4.74002 0.6
+  translation 6.25 -5.09002 0.6
   rotation 0 0 1 -3.14159
   window "spot_controller"
   supervisor TRUE
@@ -137,10 +140,10 @@ DEF Spot Spot {
         mass 1.2
       }
       horizontalResolution 540
-      fieldOfView 4.71238898038
+      fieldOfView 4.71
       verticalFieldOfView 0.008726646259962964
       numberOfLayers 1
-      maxRange 2
+      maxRange 11
       type "rotating"
     }
   ]
@@ -153,7 +156,9 @@ SolidBox {
   ]
 }
 MazeGen {
-  translation 8.52 -5.86 -0.0123118
+  translation 6.95 -5.86 -0.0148132
   mazeString "1111111100000001111011011110100111111011111010011110110111101101"
-  cellSize 2
+  cellDim 1.5 1.5
+}
+TexturedBackgroundLight {
 }
