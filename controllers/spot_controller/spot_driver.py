@@ -461,6 +461,11 @@ class SpotDriver:
         self.__spot_inverse_control()
         self.__model_cb()
 
+    def direction(self, x, y, z):
+        self._cmd_vel(x, y, z)
+        self.__spot_inverse_control()
+        self.__model_cb()
+
     def stop(self):
         self._cmd_vel(0, 0, 0)
         self.__spot_inverse_control()

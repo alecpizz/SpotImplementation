@@ -68,7 +68,6 @@ def left_wall_present():
     extracted_data = lidar[start_index: end_index + 1]
     current_left = np.mean(extracted_data)
     left_average = current_left
-    print("Left Wall diff at sector:", LEFT_WALL_INDEX, current_left)
     left_wall = current_left < WALL_MAX_THRESHOLD
 
 
@@ -83,7 +82,6 @@ def right_wall_present():
     extracted_data = lidar[start_index: end_index + 1]
     current_right = np.mean(extracted_data)
     right_average = current_right
-    print("Right Wall diff at sector:", RIGHT_WALL_INDEX, current_right)
     right_wall = current_right < 1.5
 
 
@@ -106,20 +104,20 @@ def front_wall_present():
     extracted_data = np.concatenate((slice1, slice2))
     current_front = np.mean(extracted_data)
     front_average = current_front
-    print("Front Wall diff at sector:", FRONT_WALL_INDEX, current_front)
     front_wall = current_front < WALL_MAX_THRESHOLD
 
 
 # 50 0.01 5 works kinda
 DESIRED_WALL_DISTANCE = 1
-KP = 60
-KI = 0.05
-KD = 10
+KP = 0.5
+KI = 0.0005
+KD = 0.05
 
 last_time = time.time()
 nodes = set()
 
 right_PID = PID(KP, KI, KD)
+left_PID = PID(KP, KI, KD)
 def string_to_array(input, width):
     string_length = len(input)
     if string_length % width != 0:
@@ -148,10 +146,24 @@ for i in range(cmd_length):
     elif command == "right":
         spot.turn_right(4.8)
     elif command == "forward":
-        if i < cmd_length - 1 and commands[i + 1] == "forward":
-            spot.move_forward(4.35)
-        else:
-            spot.move_forward(4.7)
+        end_time = time.time() + 3.08
+        while end_time > time.time():
+            lidar = np.array(spot.get_lidar_image())
+            lidar = lidar[np.isfinite(lidar)]
+            check_walls()
+            right_distance = right_average
+            left_distance = left_average
+            pid_output = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
+            pid_output2 = left_PID.calc_pid(left_distance, DESIRED_WALL_DISTANCE)
+            pid_multi = 0.15
+            angular_z = (-pid_output) * pid_multi
+            if right_distance > DESIRED_WALL_DISTANCE * 2 and left_distance < DESIRED_WALL_DISTANCE:
+                angular_z = (pid_output2) * pid_multi
+            linear_x = 0.5
+            linear_y = 0.0
+            spot.direction(linear_x, linear_y, angular_z)
+            spot.step(spot.get_timestep())
+
     spot.stop_moving(0.2)
 
 
