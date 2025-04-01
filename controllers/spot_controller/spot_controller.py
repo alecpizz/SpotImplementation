@@ -109,7 +109,7 @@ def front_wall_present():
 
 # 50 0.01 5 works kinda
 DESIRED_WALL_DISTANCE = 1
-KP = 5
+KP = 8
 KI = 0.0005
 KD = 1
 
@@ -153,9 +153,9 @@ for i in range(cmd_length):
             check_walls()
             right_distance = right_average
             left_distance = left_average
-            pid_output = right_PID.calc_pid(left_distance - right_distance, DESIRED_WALL_DISTANCE)
+            pid_output = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
             pid_output2 = left_PID.calc_pid(left_distance, DESIRED_WALL_DISTANCE)
-            pid_multi = 0.001
+            pid_multi = 0.005
             angular_z = pid_output * -pid_multi
             print(angular_z)
             if right_distance > WALL_MAX_THRESHOLD + 0.5 and left_distance < DESIRED_WALL_DISTANCE:
