@@ -13,8 +13,8 @@ WorldInfo {
   title "Spot_Maze"
 }
 Viewpoint {
-  orientation -0.2749998285201517 -0.08067718534350678 0.9580533837312704 3.6537525911386015
-  position 28.116294192423094 18.329282966189258 20.585528195505628
+  orientation 0.5755010654822715 0.5593115107583264 -0.5966315090254692 2.1077745342955705
+  position 0.5427645277627239 3.78014537293929 56.03612845637141
 }
 TexturedBackground {
   texture "noon_sunny_empty"
@@ -143,13 +143,13 @@ DEF Spot Spot {
       fieldOfView 4.71
       verticalFieldOfView 0.008726646259962964
       numberOfLayers 1
-      maxRange 11
+      maxRange 4
       type "rotating"
     }
   ]
 }
 SolidBox {
-  translation -4.35 8.51 0.54
+  translation -2.39 6.06 0.54
   size 1 1 1
   recognitionColors [
     1 0 0

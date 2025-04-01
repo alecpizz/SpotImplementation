@@ -146,7 +146,7 @@ for i in range(cmd_length):
     elif command == "right":
         spot.turn_right(4.8)
     elif command == "forward":
-        end_time = time.time() + 999# 3.08
+        end_time = time.time() + 3.08
         while end_time > time.time():
             lidar = np.array(spot.get_lidar_image())
             lidar = lidar[np.isfinite(lidar)]
