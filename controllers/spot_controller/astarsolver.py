@@ -68,6 +68,8 @@ class AstarSolver:
                 with open(OUTPUT_PATH, "w") as file:
                     file.truncate(0)
                     for command in commands:
+                        if command == "forward":
+                            continue
                         file.write(command + "\n")
                 return commands
 
