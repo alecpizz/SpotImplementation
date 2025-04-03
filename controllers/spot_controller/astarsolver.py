@@ -64,6 +64,11 @@ class AstarSolver:
                             commands.append("left")
                     commands.append("forward")
                     prev_dir = dir_num
+                OUTPUT_PATH = "/output/solve.txt"
+                with open(OUTPUT_PATH, "w") as file:
+                    file.truncate(0)
+                    for command in commands:
+                        file.write(command + "\n")
                 return commands
 
             for neighbor_row, neighbor_col, neighbor_dir in get_neighbors(current[0], current[1]):
