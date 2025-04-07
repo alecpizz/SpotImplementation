@@ -1,6 +1,6 @@
 # This is a sample Python script.
 import heapq
-
+import os
 
 # Press Ctrl+F5 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -64,7 +64,8 @@ class AstarSolver:
                             commands.append("left")
                     commands.append("forward")
                     prev_dir = dir_num
-                OUTPUT_PATH = "/output/solve.txt"
+                OUTPUT_PATH = "output/solve.txt"
+                os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
                 with open(OUTPUT_PATH, "w") as file:
                     file.truncate(0)
                     for command in commands:
