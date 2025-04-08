@@ -117,6 +117,7 @@ last_time = time.time()
 nodes = set()
 
 right_PID = PID(KP, KI, KD)
+front_PID = PID(KP, KI, KD)
 left_PID = PID(KP, KI, KD)
 def string_to_array(input, width):
     string_length = len(input)
@@ -146,27 +147,34 @@ for i in range(cmd_length):
     elif command == "right":
         spot.turn_right(4.8)
     elif command == "forward":
-        end_time = time.time() + 3.08
+        end_time = time.time() + 3.2
         while end_time > time.time():
             lidar = np.array(spot.get_lidar_image())
             lidar = lidar[np.isfinite(lidar)]
             check_walls()
             right_distance = right_average
             left_distance = left_average
-            pid_output = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
+            front_distance = front_average
+            pid_output = right_PID.calc_pid(left_distance - right_distance, DESIRED_WALL_DISTANCE)
             pid_output2 = left_PID.calc_pid(left_distance, DESIRED_WALL_DISTANCE)
+            pid_output3 = front_PID.calc_pid(front_distance, DESIRED_WALL_DISTANCE)
             pid_multi = 0.005
+
+            linear_x = 0.5
+            linear_y = 0.0
             angular_z = pid_output * -pid_multi
-            print(angular_z)
+            print(front_distance)
             if right_distance > WALL_MAX_THRESHOLD + 0.5 and left_distance < DESIRED_WALL_DISTANCE:
                 print("flip")
                 angular_z = (pid_output2) * -pid_multi
-            linear_x = 0.5
-            linear_y = 0.0
+            if front_distance < 1 and front_distance > 0.0:
+                print("TOO MUCH", front_distance)
+                linear_x = pid_output3 * pid_multi
+
             spot.direction(linear_x, linear_y, angular_z)
             spot.step(spot.get_timestep())
 
-    spot.stop_moving(0.2)
+    spot.stop_moving(0.5)
 
 
 # while spot.step(spot.get_timestep()) != -1:
