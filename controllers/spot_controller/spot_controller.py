@@ -124,28 +124,26 @@ def fwd_movement():
         right_distance = right_average
         left_distance = left_average
         front_distance = front_average
-        # caluclate left-right pid, left pid, right pid, fwd pid
-        pid_output_average = avg_PID.calc_pid( right_distance, DESIRED_WALL_DISTANCE)
+        # caluclate left pid, right pid, fwd pid
         pid_output_left = left_PID.calc_pid(left_distance, DESIRED_WALL_DISTANCE)
         pid_output_right = right_PID.calc_pid(right_distance, DESIRED_WALL_DISTANCE)
         pid_output_front = front_PID.calc_pid(front_distance, DESIRED_WALL_DISTANCE)
-        print(right_distance)
-        print(pid_output_right)
+
         # base movement
         pid_multi = -1.0
-        angular_pid_multi = 0.005
+        angular_pid_multi = 0.05
         linear_x = 0.5
         angular_z = 0.0
         linear_y = 0.0
-        if pid_output_average > 0.1:
-            linear_y = pid_output_average * pid_multi
+        if pid_output_front > 0.1:
+            linear_y = pid_output_front * pid_multi
         # suddenly no right wall
-        if right_distance > WALL_MAX_THRESHOLD + 0.5 and left_distance < DESIRED_WALL_DISTANCE:
+        if right_distance > WALL_MAX_THRESHOLD + 0.5 and left_distance < DESIRED_WALL_DISTANCE and pid_output_left > 0.1:
             linear_y = pid_output_left * -pid_multi
             angular_z = pid_output_left * -angular_pid_multi
         # suddenly no left wall
-        elif left_distance > WALL_MAX_THRESHOLD + 0.5 and right_distance < DESIRED_WALL_DISTANCE:
-            linear_y = pid_output_right * -pid_multi
+        elif left_distance > WALL_MAX_THRESHOLD + 0.5 and right_distance < DESIRED_WALL_DISTANCE and pid_output_right > 0.1:
+            linear_y = pid_output_right * pid_multi
             angular_z = pid_output_right * -angular_pid_multi
         # no left wall or right wall, just try to go straight
         elif right_distance > WALL_MAX_THRESHOLD and left_distance > WALL_MAX_THRESHOLD:
@@ -154,7 +152,7 @@ def fwd_movement():
         # wall incoming, slow down
         if 1 > front_distance > 0.0:
             linear_x = pid_output_front * pid_multi
-        spot.direction(linear_x, -linear_y, 0)
+        spot.direction(linear_x, -linear_y, angular_z)
         spot.step()
 
 
