@@ -11,6 +11,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 
 WorldInfo {
   title "Spot_Maze"
+  basicTimeStep 10
 }
 Viewpoint {
   orientation 0.5755010654822715 0.5593115107583264 -0.5966315090254692 2.1077745342955705

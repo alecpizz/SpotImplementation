@@ -148,6 +148,11 @@ class SpotDriver:
         self.allow_new_target = False
         self.gripper_close = False
 
+        self.position_field = self.robot.getSelf().getField("translation")
+        self.rotation_field = self.robot.getSelf().getField("rotation")
+        self.initial_position = self.position_field.getSFVec3f()
+        self.initial_rotation = self.rotation_field.getSFRotation()
+
     def __model_cb(self):
         spot_rot = self.spot_node.getField("rotation")
         spot_rot_val = spot_rot.getSFRotation()
@@ -507,8 +512,15 @@ class SpotDriver:
     def step(self, timestep):
        return self.robot.step(timestep)
 
+    def step(self):
+        return self.robot.step()
+
     def get_camera(self):
         return self.camera
+
+    def restart(self):
+        self.position_field.setSFVec3f(self.initial_position)
+        self.rotation_field.setSFRotation(self.initial_rotation)
 
     def get_maze(self):
         children = self.robot.getRoot().getField('children')
@@ -517,6 +529,22 @@ class SpotDriver:
             node = children.getMFNode(i)
             if node.getField('mazeString'):
                 return node.getField('mazeString').getSFString()
+
+    def get_maze_entrance(self):
+        children = self.robot.getRoot().getField('children')
+        number = children.getCount()
+        for i in range(0, number):
+            node = children.getMFNode(i)
+            if node.getField('entrance'):
+                return node.getField('entrance').getSFVec2f()
+
+    def get_maze_exit(self):
+        children = self.robot.getRoot().getField('children')
+        number = children.getCount()
+        for i in range(0, number):
+            node = children.getMFNode(i)
+            if node.getField('exit'):
+                return node.getField('exit').getSFVec2f()
 
     def get_maze_width(self):
         children = self.robot.getRoot().getField('children')

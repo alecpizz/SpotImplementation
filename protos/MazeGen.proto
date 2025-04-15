@@ -8,6 +8,8 @@ PROTO MazeGen [
   field SFString mazeString "1111111100000001111111011111110111111101111111011111110111111101"
   field SFInt32 mazeWidth 8
   field SFVec2f cellDim 2 2
+  field SFVec2f entrance 1 0
+  field SFVec2f exit 7 6
   field SFRotation rotation 0 1 0 3.14
 ]
 {

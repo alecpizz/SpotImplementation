@@ -27,3 +27,8 @@ class PID:
         self.prev_error = error
         self.last_time = current_time
         return spring + integral + damper
+
+    def reset_pid(self):
+        self.integral_error = 0.0
+        self.prev_error = 0.0
+        self.last_time = time.time()
