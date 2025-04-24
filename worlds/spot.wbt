@@ -17,7 +17,8 @@ Viewpoint {
   position 0.5427645277627239 3.78014537293929 56.03612845637141
 }
 TexturedBackground {
-  texture "noon_sunny_empty"
+  texture "noon_sunny_garden"
+  skybox FALSE
   skyColor [
     0.3 0.7 1
   ]
@@ -157,7 +158,7 @@ SolidBox {
 }
 MazeGen {
   translation 6.95 -5.86 -0.0148132
-  mazeString "1111111100000001111011011110100111111011111010011110110111101101"
+  mazeString "1111111100100001101010111000000110101011101010011100000110101101"
   cellDim 1.5 1.5
 }
 TexturedBackgroundLight {

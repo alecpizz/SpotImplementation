@@ -163,9 +163,9 @@ while spot.step() != -1:
         command = commands[i]
         print(command)
         if command == "left":
-            spot.turn_left(4.8)
+            spot.turn_left(4.9)
         elif command == "right":
-            spot.turn_right(4.8)
+            spot.turn_right(4.9)
         elif command == "forward":
             fwd_movement()
         avg_PID.reset_pid()
