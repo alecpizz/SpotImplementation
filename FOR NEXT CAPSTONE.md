@@ -24,3 +24,4 @@ This project was hard, and there was a decent amount of engineering done for thi
 - What Inverse Kinematics (IK) is and how a basic trigonometry implementation of that works.
 - General Webots and Python knowledge.
 - AVOID ROS2 IF YOU VALUE YOUR TIME. It'll only be really useable on linux. 
+- If you need further information, please email Alec at apizziferro@mail.bradley.edu
